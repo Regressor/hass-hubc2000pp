@@ -1,0 +1,6 @@
+{
+  "name": "Bolid C2000PP HASS integration",
+  "homeassistant": "2023.1.5",
+  "country": "RU",
+  "render_readme": true,
+}
