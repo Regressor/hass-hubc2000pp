@@ -1,15 +1,15 @@
 {
   "domain": "hubc2000pp",
   "name": "HUBC2000PP integration (Bolid SS)",
-  "version": "1.0.1",
   "codeowners": ["@Regressor"],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/Regressor/hass-hubc2000pp",
-  "issue_tracker": "https://github.com/Regressor/hass-hubc2000pp/issues",
   "homekit": {},
   "iot_class": "local_push",
+  "issue_tracker": "https://github.com/Regressor/hass-hubc2000pp/issues",
   "requirements": ["aioudp==0.1.1"],
   "ssdp": [],
+  "version": "1.0.1",
   "zeroconf": []
 }
