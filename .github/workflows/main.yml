@@ -1,5 +1,4 @@
-name: Validate with hassfest
-
+name: Hassfest
 on:
   push:
   pull_request:
