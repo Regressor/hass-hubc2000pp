@@ -1,3 +1,5 @@
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
+
 # Интеграция оборудования Bolid в home assistant
 
 Данный репозиторий представляет собой интеграцию для Home Assistant. Интеграция предназначена 
