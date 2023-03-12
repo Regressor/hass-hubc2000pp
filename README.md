@@ -1,4 +1,6 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
+![hassfest](https://github.com/Regressor/hass-hubc2000pp/actions/workflows/main.yml/badge.svg)
+![hacs](https://github.com/Regressor/hass-hubc2000pp/actions/workflows/hacs.yml/badge.svg)
 
 # Интеграция оборудования Bolid в home assistant
 
