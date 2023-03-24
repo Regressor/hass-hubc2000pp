@@ -27,6 +27,8 @@ var sensor_types = {
 	14: "ripInputVoltageSensor",
 	15: "statusSensor",
 	16: "statusSensor",
+	17: "soundSensor",
+	18: "carbonMonoxideSensor",
 }
 
 hub.signalUpdateSh.connect(updateSh); // Связать сигнал с функцией.

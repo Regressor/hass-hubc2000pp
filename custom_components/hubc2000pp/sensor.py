@@ -9,9 +9,11 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
+    CONCENTRATION_PARTS_PER_MILLION,
     PERCENTAGE,
     UnitOfElectricCurrent,
     UnitOfElectricPotential,
+    UnitOfSoundPressure,
     UnitOfTemperature,
 )
 from homeassistant.core import HomeAssistant, callback
@@ -32,6 +34,8 @@ DEVICE_CLASS_MAP = {
     "ripBatteryVoltageSensor": SensorDeviceClass.VOLTAGE,
     "ripBatteryLevelSensor": SensorDeviceClass.BATTERY,
     "ripInputVoltageSensor": SensorDeviceClass.VOLTAGE,
+    "soundSensor": SensorDeviceClass.SOUND_PRESSURE,
+    "carbonMonoxideSensor": : SensorDeviceClass.CO,
 }
 
 STATE_CLASS_MAP = {
@@ -42,6 +46,8 @@ STATE_CLASS_MAP = {
     "ripBatteryVoltageSensor": SensorStateClass.MEASUREMENT,
     "ripBatteryLevelSensor": SensorStateClass.MEASUREMENT,
     "ripInputVoltageSensor": SensorStateClass.MEASUREMENT,
+    "soundSensor": SensorStateClass.MEASUREMENT,
+    "carbonMonoxideSensor": SensorStateClass.MEASUREMENT,
 }
 
 UNIT_MAP = {
@@ -52,6 +58,8 @@ UNIT_MAP = {
     "ripBatteryVoltageSensor": UnitOfElectricPotential.VOLT,
     "ripBatteryLevelSensor": PERCENTAGE,
     "ripInputVoltageSensor": UnitOfElectricPotential.VOLT,
+    "soundSensor": UnitOfSoundPressure.DECIBEL,
+    "carbonMonoxideSensor": CONCENTRATION_PARTS_PER_MILLION,
 }
 
 ADC_SENSORS = {
@@ -62,6 +70,8 @@ ADC_SENSORS = {
     "ripBatteryVoltageSensor",
     "ripBatteryLevelSensor",
     "ripInputVoltageSensor",
+    "carbonMonoxideSensor",
+    "soundSensor",
 }
 
 
@@ -94,6 +104,14 @@ class Device(CoordinatorEntity[HUBC2000PPDataUpdateCoordinator], SensorEntity):
 
         device_name = self.name
         device_uid = device["uid"]
+
+        if device["type"] == "carbonMonoxideSensor":
+            device_name = "с2000-вти"
+            device_uid = f'{device["dev"]}.{device["sh"]}'
+
+        if device["type"] == "soundSensor":
+            device_name = "с2000-пик"
+            device_uid = f'{device["dev"]}.{device["sh"]}'
 
         if device["type"] == "smokeSensor":
             device_name = "ДИП-34А"
