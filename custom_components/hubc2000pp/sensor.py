@@ -35,7 +35,7 @@ DEVICE_CLASS_MAP = {
     "ripBatteryLevelSensor": SensorDeviceClass.BATTERY,
     "ripInputVoltageSensor": SensorDeviceClass.VOLTAGE,
     "soundSensor": SensorDeviceClass.SOUND_PRESSURE,
-    "carbonMonoxideSensor": : SensorDeviceClass.CO,
+    "carbonMonoxideSensor": SensorDeviceClass.CO,
 }
 
 STATE_CLASS_MAP = {
