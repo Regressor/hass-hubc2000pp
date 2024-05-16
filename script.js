@@ -10,6 +10,7 @@ const DLM = "__DLM__";
 var adc_list = {};
 
 // Заполняется вручную по реальным данным. Цифра - номер зоны
+// Типы счетчиков - https://developers.home-assistant.io/docs/core/entity/sensor/#available-state-classes
 var sensor_types = {
 	1: "doorSensor",
 	2: "motionSensor",
