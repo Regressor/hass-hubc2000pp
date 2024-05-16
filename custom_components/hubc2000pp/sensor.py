@@ -36,6 +36,10 @@ DEVICE_CLASS_MAP = {
     "ripInputVoltageSensor": SensorDeviceClass.VOLTAGE,
     "soundSensor": SensorDeviceClass.SOUND_PRESSURE,
     "carbonMonoxideSensor": SensorDeviceClass.CO,
+    "counterSensor": "",
+    "counterTotalSensor": "",
+    "counterTotalIncSensor": "",
+    "genericAdcSensor": "",
 }
 
 STATE_CLASS_MAP = {
@@ -48,6 +52,10 @@ STATE_CLASS_MAP = {
     "ripInputVoltageSensor": SensorStateClass.MEASUREMENT,
     "soundSensor": SensorStateClass.MEASUREMENT,
     "carbonMonoxideSensor": SensorStateClass.MEASUREMENT,
+    "counterSensor": SensorStateClass.MEASUREMENT,
+    "counterTotalSensor": SensorStateClass.TOTAL,
+    "counterTotalIncSensor": SensorStateClass.TOTAL_INCREASING,
+    "genericAdcSensor": SensorStateClass.MEASUREMENT,
 }
 
 UNIT_MAP = {
@@ -60,6 +68,10 @@ UNIT_MAP = {
     "ripInputVoltageSensor": UnitOfElectricPotential.VOLT,
     "soundSensor": UnitOfSoundPressure.DECIBEL,
     "carbonMonoxideSensor": CONCENTRATION_PARTS_PER_MILLION,
+    "counterSensor": "",
+    "counterTotalSensor": "",
+    "counterTotalIncSensor": "",
+    "genericAdcSensor": "",
 }
 
 ADC_SENSORS = {
@@ -72,6 +84,10 @@ ADC_SENSORS = {
     "ripInputVoltageSensor",
     "carbonMonoxideSensor",
     "soundSensor",
+    "counterSensor",
+    "counterTotalSensor",
+    "counterTotalIncSensor",
+    "genericAdcSensor",
 }
 
 
@@ -133,6 +149,14 @@ class Device(CoordinatorEntity[HUBC2000PPDataUpdateCoordinator], SensorEntity):
             device_name = "РИП12-RS"
             device_uid = device["dev"]
 
+        if device["type"].startswith("counter"):
+            device_name = "С2000-АСРх"
+            device_uid = f'{device["dev"]}.{device["sh"]}'
+
+        if device["type"] == "genericAdcSensor":
+            device_name = "АЦП"
+            device_uid = f'{device["dev"]}.{device["sh"]}'
+        
         if device["type"].startswith("temperature") or device["type"].startswith(
             "humidity"
         ):
