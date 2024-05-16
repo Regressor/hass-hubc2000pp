@@ -29,6 +29,10 @@ var sensor_types = {
 	16: "statusSensor",
 	17: "soundSensor",
 	18: "carbonMonoxideSensor",
+	19: "counterSensor",
+	20: "counterTotalSensor",
+	21: "counterTotalIncSensor",
+	22: "genericAdcSensor",
 }
 
 hub.signalUpdateSh.connect(updateSh); // Связать сигнал с функцией.
@@ -59,6 +63,12 @@ hub.signalUpdateADC.connect(updateADC); // Связать сигнал с фун
 function updateADC(sh, adc) {
 	// Накапливаем значения ADC в словаре, чтобы отдавать их по запросу
         adc_list[sh] = adc;
+}
+
+hub.signalUpdateCounter.connect(updateCounter); // Связать сигнал с функцией.
+function updateCounter(sh, counter) {
+	// Накапливаем значения Counter в словаре ADC, чтобы отдавать их по запросу
+        adc_list[sh] = counter;
 }
 
 function getZoneList() {
