@@ -1,25 +1,19 @@
 """Support for HUB-C2000PP alarm_control_panel."""
 import logging
 from typing import Any
-
 from homeassistant.components.alarm_control_panel import (
     AlarmControlPanelEntity,
     AlarmControlPanelEntityFeature,
+    AlarmControlPanelState,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import (
-    STATE_ALARM_ARMED_AWAY,
-    STATE_ALARM_ARMING,
-    STATE_ALARM_DISARMED,
-    STATE_ALARM_TRIGGERED,
-)
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from . import HUBC2000PPDataUpdateCoordinator
-from .const import ARMED_EVENTS, ARMING_EVENTS, DISARMED_EVENTS, DOMAIN, ALARM_EVENTS
+from .const import ARMED_EVENTS, ARMING_EVENTS, DISARMED_EVENTS, DOMAIN
 from .hubc2000pp import ArmFailed, DisarmFailed, arm_partition, disarm_partition
 
 _LOGGER = logging.getLogger(__name__)
@@ -99,14 +93,12 @@ class AlarmControlPanelDevice(
     def _get_status_by_code(self, code: int) -> str:
         """Get status or event description for code."""
         if code in ARMED_EVENTS:
-            return STATE_ALARM_ARMED_AWAY
+            return AlarmControlPanelState.ARMED_AWAY
         if code in ARMING_EVENTS:
-            return STATE_ALARM_ARMING
+            return AlarmControlPanelState.ARMING
         if code in DISARMED_EVENTS:
-            return STATE_ALARM_DISARMED
-        if code in ALARM_EVENTS:
-            return STATE_ALARM_TRIGGERED
-        return None
+            return AlarmControlPanelState.DISARMED
+        return AlarmControlPanelState.TRIGGERED
         # result = DEVICE_STATUSES_DICT.get(code, None)
         # if not result:
         #    result = DEVICE_EVENTS_DICT.get(code, DEVICE_STATUSES_DICT[0])
@@ -134,8 +126,24 @@ class AlarmControlPanelDevice(
             state_code = int(device["stat"])
             if current_code != state_code:
                 self._attr_extra_state_attributes = {"code": state_code}
-                self._attr_state = self._get_status_by_code(state_code)
+                #self._attr_state = self._get_status_by_code(state_code)
                 super()._handle_coordinator_update()
+
+    @property
+    def alarm_state(self) -> AlarmControlPanelState | None:
+        """Return the current state of the alarm."""
+        device: dict[str, Any] | None = next(
+            (
+                device
+                for device in self.coordinator.data["parts"]
+                if device["uid"] == self.unique_id
+            ),
+            None,
+        )
+
+        if device:
+            return self._get_status_by_code(int(device["stat"]))
+        return None
 
     async def async_added_to_hass(self) -> None:
         """When entity is added to hass."""
