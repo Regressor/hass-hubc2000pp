@@ -1,6 +1,6 @@
 {
   "name": "Bolid C2000PP HA integration",
-  "homeassistant": "2022.11.0",
+  "homeassistant": "2024.11.0",
   "country": "RU",
   "render_readme": true
 }
