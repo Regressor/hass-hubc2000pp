@@ -10,6 +10,6 @@
   "issue_tracker": "https://github.com/Regressor/hass-hubc2000pp/issues",
   "requirements": ["aioudp==0.1.1"],
   "ssdp": [],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "zeroconf": []
 }
