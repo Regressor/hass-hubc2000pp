@@ -13,7 +13,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from . import HUBC2000PPDataUpdateCoordinator
-from .const import ARMED_EVENTS, ARMING_EVENTS, DISARMED_EVENTS, DOMAIN
+from .const import ARMED_EVENTS, ARMING_EVENTS, DISARMED_EVENTS, DOMAIN, ALARM_EVENTS
 from .hubc2000pp import ArmFailed, DisarmFailed, arm_partition, disarm_partition
 
 _LOGGER = logging.getLogger(__name__)
@@ -98,7 +98,9 @@ class AlarmControlPanelDevice(
             return AlarmControlPanelState.ARMING
         if code in DISARMED_EVENTS:
             return AlarmControlPanelState.DISARMED
-        return AlarmControlPanelState.TRIGGERED
+        if code in ALARM_EVENTS:
+            return AlarmControlPanelState.TRIGGERED
+        return None
         # result = DEVICE_STATUSES_DICT.get(code, None)
         # if not result:
         #    result = DEVICE_EVENTS_DICT.get(code, DEVICE_STATUSES_DICT[0])
